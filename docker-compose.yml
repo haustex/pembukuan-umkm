@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:17-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: lk
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?isi POSTGRES_PASSWORD di .env}
+      POSTGRES_DB: lk
+      TZ: Asia/Jakarta
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U lk -d lk"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  app:
+    # Pakai image siap pakai dari GHCR; `docker compose up -d --build` untuk build sendiri dari source.
+    image: ${APP_IMAGE:-ghcr.io/haustex/pembukuan-umkm:latest}
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgres://lk:${POSTGRES_PASSWORD}@db:5432/lk
+      BRAND_NAME: ${BRAND_NAME:-Pembukuan}
+      BUSINESS_NAME: ${BUSINESS_NAME:-}
+      SEED_ACCOUNTS: ${SEED_ACCOUNTS:-}
+      ADMIN_EMAIL: ${ADMIN_EMAIL:-}
+      ADMIN_NAME: ${ADMIN_NAME:-Owner}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD:-}
+    # cuma bisa diakses dari server sendiri; publiknya lewat reverse proxy (Caddy/Nginx)
+    ports:
+      - "127.0.0.1:3010:3010"
+
+volumes:
+  db_data:

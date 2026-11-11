@@ -1,0 +1,16 @@
+# Contoh konfigurasi Caddy. Ganti lk.example.com dengan subdomain lo.
+# Kalau pakai Cloudflare (proxied), bisa pakai Cloudflare Origin Certificate.
+# Tanpa Cloudflare: hapus baris tls, Caddy otomatis ambil sertifikat Lets Encrypt.
+lk.example.com {
+	tls /etc/caddy/certs/origin.pem /etc/caddy/certs/origin.key
+
+	encode zstd gzip
+	header {
+		Strict-Transport-Security "max-age=31536000; includeSubDomains"
+		-Server
+	}
+
+	# Kalau Caddy jalan di host: 127.0.0.1:3010
+	# Kalau Caddy jalan di Docker: ganti jadi pembukuan-umkm-app-1:3010 dan sambungkan ke network yang sama
+	reverse_proxy 127.0.0.1:3010
+}
