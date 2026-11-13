@@ -185,6 +185,19 @@ PR dan issue welcome, terutama buat:
 
 Tolong buka issue dulu buat perubahan besar.
 
+## Sponsor
+
+Aplikasi ini gratis (MIT) dan dirawat oleh workshop furnitur kecil di Jepara. Kalau aplikasi ini menghemat waktu lo,
+[dukung Haus Kayu lewat GitHub Sponsors](https://github.com/sponsors/haustex).
+
+### Sponsor bisnis
+
+_Logo lo di sini. [Jadi sponsor Business](https://github.com/sponsors/haustex) ($50/bulan)._
+
+### Backer
+
+_Nama lo di sini. [Jadi Backer](https://github.com/sponsors/haustex) ($10/bulan)._
+
 ## Lisensi
 
 [MIT](LICENSE). Bebas dipakai, diubah, dan dijual. Kalau berguna buat usaha lo, kasih ⭐ ya.
